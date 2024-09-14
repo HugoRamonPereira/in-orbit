@@ -13,7 +13,7 @@ export function CreateGoal() {
             <div className="flex items-center justify-between">
               <DialogTitle>Create goal</DialogTitle>
               <DialogClose>
-                <X className='size-5 text-zinc-600' />
+                <X className='size-5 text-zinc-600 hover:text-zinc-400 transition-colors duration-150' />
               </DialogClose>
             </div>
             <DialogDescription>
