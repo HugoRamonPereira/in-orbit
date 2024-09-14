@@ -1,11 +1,16 @@
 import fastify from 'fastify';
 import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from "fastify-type-provider-zod";
-import { getPendingWeekGoals } from '../functions/get-pending-week-goals';
 import { createGoalRoute } from './routes/create-goal';
 import { createGoalCompletionRoute } from './routes/create-goal-completion';
 import { getPendingWeekGoalsRoute } from './routes/get-pending-week-goals';
+import { getWeekSummaryRoute } from './routes/get-week-summary';
+import fastifyCors from '@fastify/cors';
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
+
+app.register(fastifyCors, {
+  origin: '*'
+})
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
@@ -13,6 +18,7 @@ app.setSerializerCompiler(serializerCompiler);
 app.register(createGoalRoute)
 app.register(createGoalCompletionRoute)
 app.register(getPendingWeekGoalsRoute)
+app.register(getWeekSummaryRoute)
 
 app.listen({
   port: 3333,
