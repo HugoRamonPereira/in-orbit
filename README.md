@@ -8,7 +8,7 @@
 ### STACK USED TO BUILD THE PROJECT
 
 <p align-items="center" justify-content="center">
-  <img src='./Frontend/src/assets/images/backend-stack.png' />
+  <img src='./frontend/src/assets/images/backend-stack.png' />
 </p>
 
 Our backend is built using [Node.js](https://nodejs.org/) with [Fastify](https://fastify.dev/).
@@ -30,7 +30,7 @@ npm run dev
 ## IN ORBIT FRONTEND - WEB APPLICATION
 
 <p align-items="center" justify-content="center">
-  <img src='./Frontend/src/assets/images/frontend-stack.png' />
+  <img src='./frontend/src/assets/images/frontend-stack.png' />
 </p>
 
 The project was built using [React.js](https://react.dev/) and [Vite](https://vitejs.dev/) with [NPM](https://www.npmjs.com/) as our package manager.
