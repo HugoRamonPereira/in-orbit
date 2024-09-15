@@ -69,7 +69,11 @@ export function Summary() {
 
           return (
             <div key={date} className="flex flex-col gap-4">
-              <h3 className="font-medium">{weekDay} <span className="text-zinc-400 text-xs">({formattedDate})</span></h3>
+              <h3 className="font-medium">
+                <span>{weekDay}</span>
+                <span className="text-zinc-400 text-xs">({formattedDate})</span>
+              </h3>
+
               <ul className="flex flex-col gap-3">
                 {goals.map(goal => {
                   const timeOfGoalCompletion = dayjs(goal.dateOfCompletion).format('hh:mm')
@@ -77,7 +81,15 @@ export function Summary() {
                   return (
                     <li key={goal.id} className="flex items-center gap-2">
                       <CheckCircle2 className="size-4 text-pink-500" />
-                      <span className="text-sm text-zinc-400">You have completed "<span className="text-zinc-50 font-bold">{goal.title}</span>" at <span className="text-zinc-50 font-bold">{timeOfGoalCompletion}</span></span>
+                      <span className="text-sm text-zinc-400">
+                        You have completed&nbsp;"
+                        <span className="text-zinc-50 font-bold">
+                          {goal.title}
+                        </span>"&nbsp;at
+                        <span className="text-zinc-50 font-bold">
+                          &nbsp;{timeOfGoalCompletion}
+                        </span>
+                      </span>
                     </li>
                   )
                 })}
