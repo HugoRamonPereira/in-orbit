@@ -5,14 +5,37 @@ import { InOrbitIcon } from "./in-orbit-icon";
 import { Progress, ProgressIndicator } from "./ui/progress-bar";
 import { Separator } from "./ui/separator";
 import { OutlineButton } from "./ui/outline-button";
+import { useQuery } from "@tanstack/react-query";
+import { getSummary } from "../http/getSummary";
+import dayjs from "dayjs";
+import advancedFormat from 'dayjs/plugin/advancedFormat';
+
+dayjs.extend(advancedFormat)
 
 export function Summary() {
+  const { data } = useQuery({
+    queryKey: ['summary'],
+    queryFn: getSummary,
+    staleTime: 1000 * 60, // 60 seconds
+  })
+
+  if (!data) {
+    return null
+  }
+
+  const firstDayOfTheWeek = dayjs().startOf('week').format('MMMM, Do')
+  const lastDayOfTheWeek = dayjs().endOf('week').format('MMMM, Do')
+
+  const percentageOfCompletion = Math.round(data.completed * 100 / data.total)
+
   return (
-    <div className="py-10 max-w-[480px] px-5 mx-auto flex flex-col gap-6">
+    <div className="py-10 max-w-[520px] px-5 mx-auto flex flex-col gap-6">
       <div className="flex item-center justify-between">
         <div className="flex items-center gap-3">
           <InOrbitIcon />
-          <span className="text-lg font-semibold">5 to 10 of August</span>
+          <span className="text-lg font-semibold">
+            {firstDayOfTheWeek} - {lastDayOfTheWeek}
+          </span>
         </div>
         <DialogTrigger asChild>
           <Button size="sm">
@@ -23,17 +46,17 @@ export function Summary() {
       </div>
       <div className="flex flex-col gap-3">
         <Progress max={15} value={2}>
-          <ProgressIndicator style={{ width: '50%' }} />
+          <ProgressIndicator style={{ width: `${percentageOfCompletion}%` }} />
         </Progress>
         <div className="flex items-center justify-between text-xs text-zinc-400">
           <span>
             You have completed
-            <span className="text-zinc-50 font-bold"> 8 </span>
+            <span className="text-zinc-50 font-bold">&nbsp;{data?.completed}&nbsp;</span>
             out of
-            <span className="text-zinc-50 font-bold"> 15 </span>
+            <span className="text-zinc-50 font-bold">&nbsp;{data?.total}&nbsp;</span>
             goals this week
           </span>
-          <span>50%</span>
+          <span>{percentageOfCompletion}%</span>
         </div>
       </div>
       <Separator />
