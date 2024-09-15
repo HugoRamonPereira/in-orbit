@@ -80,32 +80,28 @@ export function Summary() {
       </div>
       <div className="flex flex-col gap-6">
         <h2 className="text-xl font-medium">Your week</h2>
-        <div className="flex flex-col gap-4">
-          <h3 className="font-medium">Sunday <span className="text-zinc-400 text-xs">(August 10th)</span></h3>
-          <ul className="flex flex-col gap-3">
-            <li className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-pink-500" />
-              <span className="text-sm text-zinc-400">You have completed "<span className="text-zinc-50 font-bold">Wake up early</span>" at <span className="text-zinc-50 font-bold">08:10</span></span>
-            </li>
-            <li className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-pink-500" />
-              <span className="text-sm text-zinc-400">You have completed "<span className="text-zinc-50 font-bold">Wake up early</span>" at <span className="text-zinc-50 font-bold">08:10</span></span>
-            </li>
-            <li className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-pink-500" />
-              <span className="text-sm text-zinc-400">You have completed "<span className="text-zinc-50 font-semibold">Wake up early</span>" at <span className="text-zinc-50 font-semibold">08:10</span></span>
-            </li>
-          </ul>
-        </div>
-        <div className="flex flex-col gap-4">
-          <h3 className="font-medium">Monday <span className="text-zinc-400 text-xs">(August 11th)</span></h3>
-          <ul className="flex flex-col gap-3">
-            <li className="flex items-center gap-2">
-              <CheckCircle2 className="size-4 text-pink-500" />
-              <span className="text-sm text-zinc-400">You have completed "<span className="text-zinc-50 font-bold">Wake up early</span>" at <span className="text-zinc-50 font-bold">08:10</span></span>
-            </li>
-          </ul>
-        </div>
+        {Object.entries(data.goalsPerDay).map(([date, goals]) => {
+          const weekDay = dayjs(date).format('dddd')
+          const formattedDate = dayjs(date).format('MMMM, Do')
+
+          return (
+            <div key={date} className="flex flex-col gap-4">
+              <h3 className="font-medium">{weekDay} <span className="text-zinc-400 text-xs">({formattedDate})</span></h3>
+              <ul className="flex flex-col gap-3">
+                {goals.map(goal => {
+                  const timeOfGoalCompletion = dayjs(goal.dateOfCompletion).format('hh:mm')
+
+                  return (
+                    <li key={goal.id} className="flex items-center gap-2">
+                      <CheckCircle2 className="size-4 text-pink-500" />
+                      <span className="text-sm text-zinc-400">You have completed "<span className="text-zinc-50 font-bold">{goal.title}</span>" at <span className="text-zinc-50 font-bold">{timeOfGoalCompletion}</span></span>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
